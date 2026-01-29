@@ -1,3 +1,6 @@
+import os
+from desc_globus_flow import read_config
+
 
 __all__ = ["flow_definition", "flow_function", "get_flow_input"]
 
@@ -88,56 +91,37 @@ def flow_function(weekly=None, compute_path=None, repository_path=None):
     return (compute_path, repository_path)
 
 
-FLOW_INPUT_TEMPLATE = {
-    "input": {
-        "repository_collection": {
-            "id": None,
-            "path": None,
-        },
-        "compute_collection": {
-            "id": None,
-            "path": None,
-        },
-        "compute": {
-            "endpoint_id": None,
-            "function_id": None,
-            "arguments": None,
+def get_flow_input(config_file):
+    config = read_config(config_file)
+
+    compute_path = os.path.join(config["compute_base_path"],
+                                config["payload_data"]["inputs_folder"])
+    compute_path = compute_path.rstrip("/") + "/"
+    repository_path = os.path.join(config["repository_base_path"],
+                                   config["payload_data"]["outputs_folder"])
+    repository_path = repository_path.rstrip("/") + "/"
+    arguments = {
+        "weekly": config["payload_data"]["weekly"],
+        "compute_path": compute_path,
+        "repository_path": repository_path
+    }
+
+    flow_input = {
+        "input": {
+            "repository_collection": {
+                "id": config["repository_collection_id"],
+                "path": config["repository_base_path"],
+            },
+            "compute_collection": {
+                "id": config["compute_collection_id"],
+                "path": config["compute_base_path"],
+            },
+            "compute": {
+                "endpoint_id": config["compute_endpoint_id"],
+                "function_id": config["flow_function_id"],
+                "arguments": arguments,
+            }
         }
     }
-}
 
-
-def get_flow_input(config_file):
-    import os
-    import yaml
-
-    with open(config_file) as fobj:
-        data = yaml.safe_load(fobj)
-
-    tmpl = FLOW_INPUT_TEMPLATE
-    tmpl["input"]["repository_collection"]["id"] \
-        = data["repository_collection_id"]
-    tmpl["input"]["repository_collection"]["path"] \
-        = data["repository_base_path"]
-
-    tmpl["input"]["compute_collection"]["id"] \
-        = data["compute_collection_id"]
-    tmpl["input"]["compute_collection"]["path"] \
-        = data["compute_base_path"]
-
-    tmpl["input"]["compute"]["endpoint_id"] = data["compute_endpoint_id"]
-    tmpl["input"]["compute"]["function_id"] = data["flow_function_id"]
-
-
-    compute_path = os.path.join(data["compute_base_path"],
-                                data["payload_data"]["inputs_folder"])
-    compute_path = compute_path.rstrip("/") + "/"
-    repository_path = os.path.join(data["repository_base_path"],
-                                   data["payload_data"]["outputs_folder"])
-    repository_path = repository_path.rstrip("/") + "/"
-    tmpl["input"]["compute"]["arguments"] \
-        = {"weekly": data["payload_data"]["weekly"],
-           "compute_path": compute_path,
-           "repository_path": repository_path}
-
-    return tmpl, data["flow_id"]
+    return flow_input, config["flow_id"]
