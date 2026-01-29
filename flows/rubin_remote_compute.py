@@ -65,7 +65,6 @@ flow_definition = {
 
 
 def flow_function(weekly=None, compute_path=None, repository_path=None):
-    import os
     import subprocess
 
     commands = f"""
@@ -86,7 +85,7 @@ def flow_function(weekly=None, compute_path=None, repository_path=None):
 
     one_line_command = " && ".join(commands.strip().split("\n"))
 
-    result = subprocess.run(one_line_command, **kwargs)
+    subprocess.run(one_line_command, **kwargs)
 
     return (compute_path, repository_path)
 

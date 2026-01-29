@@ -36,18 +36,18 @@ def register_flow(flow_definition, title=None, app_name="lsst-desc-flow-app"):
     flow = flows_client.create_flow(
         title=title,
         definition=flow_definition,
-        input_schema={} # This can be set to restrict the flow input format
+        input_schema={}  # This can be set to restrict the flow input format
     )
 
     # Collect the flow UUID
-    FLOW_ID = flow["id"]
-    print(f"\nFlow registered with UUID - {FLOW_ID}")
-    print(f"https://app.globus.org/flows/{FLOW_ID}")
+    flow_id = flow["id"]
+    print(f"\nFlow registered with UUID - {flow_id}")
+    print(f"https://app.globus.org/flows/{flow_id}")
 
     # Write flow UUID in a file
     uuid_file_name = "uuid_flow.txt"
     with open(uuid_file_name, "w") as file:
-        file.write(FLOW_ID)
+        file.write(flow_id)
         file.write("\n")
     print(f"The UUID is stored in {uuid_file_name}.\n")
 
@@ -56,12 +56,12 @@ def register_flow_function(flow_function):
     gcc = globus_compute_sdk.Client()
 
     # Register the function
-    COMPUTE_FUNCTION_ID = gcc.register_function(flow_function)
+    compute_function_id = gcc.register_function(flow_function)
 
     # Write function UUID in a file
     uuid_file_name = "uuid_flow_function.txt"
     with open(uuid_file_name, "w") as file:
-        file.write(COMPUTE_FUNCTION_ID)
+        file.write(compute_function_id)
         file.write("\n")
-    print(f"Function registered with UUID - {COMPUTE_FUNCTION_ID}")
+    print(f"Function registered with UUID - {compute_function_id}")
     print(f"The UUID is stored in {uuid_file_name}.\n")
