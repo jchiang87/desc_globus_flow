@@ -5,7 +5,8 @@ import globus_compute_sdk
 from globus_sdk import FlowsClient, UserApp
 
 
-__all__ = ["get_flow_module", "register_flow", "register_flow_function"]
+__all__ = ["get_flow_module", "register_flow", "update_flow",
+           "register_flow_function"]
 
 
 def get_flow_module(definition_file):
@@ -17,10 +18,28 @@ def get_flow_module(definition_file):
     return module
 
 
-def register_flow(flow_definition, title=None, app_name="lsst-desc-flow-app"):
-    # Public Globus thick client for authentication
-    AUTH_CLIENT_ID = "f818e8c5-61ba-4f70-8237-a8e69f266ae7"
+# Public Globus thick client for authentication
+AUTH_CLIENT_ID = "f818e8c5-61ba-4f70-8237-a8e69f266ae7"
 
+
+def update_flow(flow_definition, flow_id, title=None, app_name="lsst-desc-flow-app"):
+    flows_client = FlowsClient(
+        app=UserApp(
+            client_id=AUTH_CLIENT_ID,
+            app_name=app_name
+        )
+    )
+
+    if title is None:
+        title = flow_definition["Comment"]
+    flow = flows_client.update_flow(
+        flow_id,
+        definition=flow_definition,
+        title=title
+    )
+
+
+def register_flow(flow_definition, title=None, app_name="lsst-desc-flow-app"):
     # Create authenticated Flows client. NOTE: This can be changed to
     # use client's secrets to avoid having to authenticate.
     flows_client = FlowsClient(
