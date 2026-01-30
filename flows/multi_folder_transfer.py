@@ -5,7 +5,7 @@ __all__ = ["flow_definition", "get_flow_input"]
 
 
 flow_definition = {
-    "Comment": "Multi-folder transfers",
+    "Comment": "Multi-item transfers",
     "StartAt": "CheckIfListEmpty",
     "States": {
         "CheckIfListEmpty": {
@@ -14,12 +14,12 @@ flow_definition = {
                 {
                     "Variable": "$.input.folder_list[0]",
                     "IsPresent": True,
-                    "Next": "TransferSingleFolder"
+                    "Next": "TransferSingleItem"
                 }
             ],
             "Default": "AllDone"
         },
-        "TransferSingleFolder": {
+        "TransferSingleItem": {
             "Type": "Action",
             "ActionUrl": "https://transfer.actions.globus.org/transfer",
             "Parameters": {
@@ -29,8 +29,7 @@ flow_definition = {
                     {
                         "DATA_TYPE": "transfer_item",
                         "source_path.=": "input.source_collection.path + input.folder_list[0]",
-                        "destination_path.=": "input.destination_collection.path + input.folder_list[0]",
-                        "recursive": True
+                        "destination_path.=": "input.destination_collection.path + input.folder_list[0]"
                     }
                 ]
             },
