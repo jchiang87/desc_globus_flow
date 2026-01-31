@@ -80,45 +80,12 @@ def make_export_yaml(compute_path=None, repo=None, run_collection=None,
     import subprocess
     import textwrap
 
-    script_text = textwrap.dedent(
-        """
-        import lsst.daf.butler as daf_butler
-        from lsst.daf.butler.script import queryDatasetTypes
-
-
-        def create_export_yaml(repo, run_collection, export_file, dest_dir='.'):
-            butler = daf_butler.Butler(repo, collections=[run_collection])
-            dstypes = queryDatasetTypes(repo, False, ..., [run_collection])
-            refs = set()
-            with butler.export(directory=dest_dir, filename=export_file,
-                               transfer=None) as exporter:
-            for dstype in dstypes["name"]:
-                my_refs = set(butler.registry.queryDatasets(dstype))
-                refs = refs.union(my_refs)
-            refs = list(refs)
-            exporter.saveCollection(run_collection)
-            exporter.saveDatasets(refs)
-
-
-        if __name__ == '__main__':
-            import argparse
-            parser = argparse.ArgumentParser()
-            parser.add_argument("repo", type=str, help="Data repository")
-            parser.add_argument("run_collection", type=str, help="RUN collection")
-            parser.add_argument("export_file", type=str, help="Export file name")
-
-            args = parser.parse_args()
-            create_export_yaml(args.repo, args.run_collection, args.export_file)
-        """
-    )
-
     export_yaml = f"export_{run_collection.replace('/', '_')}.yaml"
 
     commands = f"""
     source /cvmfs/sw.lsst.eu/almalinux-x86_64/lsst_distrib/{weekly}/loadLSST.bash
     setup lsst_distrib
     cd {compute_path}
-    echo {script_text} > create_export_yaml.py
     python create_export_yaml.py {repo} {run_collection} {export_yaml}
     """
     kwargs = {
@@ -173,6 +140,11 @@ def get_flow_input(config_file):
     run_collection = config["run_collection"]
     export_yaml = f"export_{run_collection.replace('/', '_')}.yaml"
 
+    source_collection_path = os.path.join(config["source_data_path"],
+                                          config["run_collection"])
+    destination_collection_path = os.path.join(config["destination_repo"],
+                                               config["run_collection"])
+
     flow_input = {
         "input": {
             "source_compute": {
@@ -187,7 +159,7 @@ def get_flow_input(config_file):
             },
             "source_collection": {
                 "id": config["source_collection_id"],
-                "path": config["source_data_path"]
+                "path": source_collection_path
             },
             "destination_compute": {
                 "endpoint_id": config["destination_compute_endpoint_id"],
@@ -202,7 +174,7 @@ def get_flow_input(config_file):
             },
             "destination_collection": {
                 "id": config["destination_collection_id"],
-                "path": config["destination_repo"]
+                "path": destination_collection_path
             }
         }
     }
