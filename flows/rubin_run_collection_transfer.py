@@ -49,8 +49,8 @@ flow_definition = {
                 "destination_endpoint.$": "$.input.destination_collection.id",
                 "DATA": [
                     {
-                        "source_path.$": "$.input.source_compute.path",
-                        "destination_path.$": "$.input.destination_compute.path"
+                        "source_path.$": "$.input.source_compute.export_yaml",
+                        "destination_path.$": "$.input.destination_compute.export_yaml"
                     }
                 ]
             },
@@ -88,44 +88,29 @@ def make_export_yaml(compute_path=None, repo=None, run_collection=None,
     cd {compute_path}
     python create_export_yaml.py {repo} {run_collection} {export_yaml}
     """
-    kwargs = {
-        "shell": True,
-        "check": True,
-        "text": True,
-        "stdout": subprocess.PIPE,
-        "stderr": subprocess.PIPE,
-        "executable": "/bin/bash"
-    }
-
     one_line_command = " && ".join(commands.strip().split("\n"))
 
-    subprocess.run(one_line_command, **kwargs)
+    subprocess.check_call(one_line_command, shell=True)
 
     return export_yaml
 
 
 def repository_import(compute_path=None, repo=None, data_path=None,
-                      export_yaml=None, weekly=None):
+                      export_yaml=None):
     import subprocess
 
     commands = f"""
-    source /cvmfs/sw.lsst.eu/almalinux-x86_64/lsst_distrib/{weekly}/loadLSST.bash
+    source /opt/lsst/software/stack/loadLSST.bash
     setup lsst_distrib
     cd {compute_path}
     butler import --export-file {export_yaml} {repo} {data_path}
     """
-    kwargs = {
-        "shell": True,
-        "check": True,
-        "text": True,
-        "stdout": subprocess.PIPE,
-        "stderr": subprocess.PIPE,
-        "executable": "/bin/bash"
-    }
-
+    shifter_image = "ghcr.io/lsst/scipipe:al9-w_2026_05"
     one_line_command = " && ".join(commands.strip().split("\n"))
+    shifter_command = (f"shifter --image={shifter_image} "
+                       f" -- /bin/bash -c '{one_line_command}'")
 
-    subprocess.run(one_line_command, **kwargs)
+    subprocess.check_call(shifter_command, shell=True)
 
 
 flow_function = {
@@ -156,7 +141,8 @@ def get_flow_input(config_file):
                     "run_collection": run_collection,
                     "weekly": config["weekly"]
                 },
-                "path": config["source_compute_path"]
+                "export_yaml": os.path.join(config["source_compute_path"],
+                                            export_yaml)
             },
             "source_collection": {
                 "id": config["source_collection_id"],
@@ -169,10 +155,10 @@ def get_flow_input(config_file):
                     "compute_path": config["destination_compute_path"],
                     "repo": config["destination_repo"],
                     "data_path": config["destination_repo"],
-                    "export_yaml": export_yaml,
-                    "weekly": config["weekly"]
+                    "export_yaml": export_yaml
                 },
-                "path": config["destination_compute_path"]
+                "export_yaml": os.path.join(config["destination_compute_path"],
+                                            export_yaml)
             },
             "destination_collection": {
                 "id": config["destination_collection_id"],
