@@ -5,9 +5,9 @@ from desc_globus_flow import get_flow_module, register_flow, update_flow
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument("operation", choices=["register", "update"],
+                    help="Flow operation to perform")
 parser.add_argument("flow_def_file", type=str, help="flow definition file")
-parser.add_argument("--operation", choices=["register", "update"],
-                    default="register", help="Flow operation to perform")
 parser.add_argument("--flow_id", type=str, default=None,
                     help="Flow id as UUID string")
 args = parser.parse_args()
