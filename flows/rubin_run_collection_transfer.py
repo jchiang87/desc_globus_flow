@@ -12,7 +12,7 @@ flow_definition = {
         "MakeExportYaml": {
             "Comment": "Create the export yaml file for the RUN collection.",
             "Type": "Action",
-            "ActionUrl": "https://compute.actions.globus.org/v3",
+            "ActionUrl": "https://compute.actions.globus.org",
             "Parameters": {
                 "endpoint.$": "$.input.source_compute.endpoint_id",
                 "function.$": "$.input.source_compute.function_id",
@@ -61,7 +61,7 @@ flow_definition = {
         "RepositoryImport": {
             "Comment": "Ingest transferred collection into destination repo.",
             "Type": "Action",
-            "ActionUrl": "https://compute.actions.globus.org/v3",
+            "ActionUrl": "https://compute.actions.globus.org",
             "Parameters": {
                 "endpoint.$": "$.input.destination_compute.endpoint_id",
                 "function.$": "$.input.destination_compute.function_id",
@@ -75,7 +75,8 @@ flow_definition = {
 }
 
 
-def make_export_yaml(compute_path=None, repo=None, run_collection=None):
+def make_export_yaml(compute_path=None, repo=None, run_collection=None,
+                     weekly=None):
     import subprocess
     import textwrap
 
@@ -137,7 +138,7 @@ def make_export_yaml(compute_path=None, repo=None, run_collection=None):
 
 
 def repository_import(compute_path=None, repo=None, data_path=None,
-                      export_yaml=None):
+                      export_yaml=None, weekly=None):
     import subprocess
 
     commands = f"""
@@ -180,13 +181,14 @@ def get_flow_input(config_file):
                 "arguments": {
                     "compute_path": config["source_compute_path"],
                     "repo": config["source_repo"],
-                    "run_collection": run_collection
+                    "run_collection": run_collection,
+                    "weekly": config["weekly"]
                 }
             },
             "source_collection": {
                 "id": config["source_collection_id"],
                 "path": config["source_data_path"]
-            }
+            },
             "destination_compute": {
                 "endpoint_id": config["destination_compute_endpoint_id"],
                 "function_id": config["destination_function_id"],
@@ -194,7 +196,8 @@ def get_flow_input(config_file):
                     "compute_path": config["destination_compute_path"],
                     "repo": config["destination_repo"],
                     "data_path": config["destination_repo"],
-                    "export_yaml": export_yaml
+                    "export_yaml": export_yaml,
+                    "weekly": config["weekly"]
                 }
             },
             "destination_collection": {

@@ -1,11 +1,11 @@
 flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/rubin_run_collection_transfer.py
 
-flow_id: 0d12eea4-f269-41ec-a5dd-5c78ba236255
+flow_id: c1758a25-6141-49c2-8346-7df80e7c5c68
 
 # Source site parameters (USDF)
 source_compute_endpoint_id: ac73ee3a-3f2e-425c-b618-f0079c953e4f
 source_collection_id: 31f8393f-79ef-4da4-a395-7127edd9b3a4
-source_function_id: a0f63084-67e7-4769-baac-58864e5516a1
+source_function_id: c505d5ff-31b9-43d4-a121-54fce7246f4c
 source_compute_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/repo_collection_transfer/
 source_repo: main
 source_data_path: /sdf/data/rubin/repo/main/
@@ -14,6 +14,8 @@ run_collection: u/jchiang/torino_stage1_test_w_2026_04/20260125T220959Z
 # Destination site parameters (NERSC)
 destination_compute_endpoint_id: 54183796-65d2-4d85-bffd-044a6c237345
 destination_collection_id: 6bdc7956-fc0f-4ad2-989c-7aa5ee643a79
-destination_function_id: 43c74c2d-0085-4fe6-8afa-8aa7c8b15806
+destination_function_id: 727a6305-9f6f-4df4-a529-e51601e21b88
 destination_compute_path: /pscratch/sd/j/jchiang8/globus_flow_test/
-destination_repo: /pscratch/sd/j/jchiang8/globus_flow_test/repo
+destination_repo: /pscratch/sd/j/jchiang8/globus_flow_test/repo/
+
+weekly: w_2026_05
