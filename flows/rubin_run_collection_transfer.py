@@ -155,7 +155,8 @@ def get_flow_input(config_file):
                     "repo": config["source_repo"],
                     "run_collection": run_collection,
                     "weekly": config["weekly"]
-                }
+                },
+                "path": config["source_compute_path"]
             },
             "source_collection": {
                 "id": config["source_collection_id"],
@@ -170,7 +171,8 @@ def get_flow_input(config_file):
                     "data_path": config["destination_repo"],
                     "export_yaml": export_yaml,
                     "weekly": config["weekly"]
-                }
+                },
+                "path": config["destination_compute_path"]
             },
             "destination_collection": {
                 "id": config["destination_collection_id"],
