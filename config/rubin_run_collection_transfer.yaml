@@ -9,7 +9,7 @@ source_function_id: ff209ca3-28b5-4cdc-ab30-1be8b369ab18
 source_compute_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/repo_collection_transfer/
 source_repo: main
 source_data_path: /sdf/data/rubin/repo/main/
-run_collection: u/jchiang/torino_stage1_test_w_2026_04/20260125T220959Z
+run_collection: u/jchiang/torino_stage1_test_w_2026_04/20260125T231835Z
 
 # Destination site parameters (NERSC)
 destination_compute_endpoint_id: 54183796-65d2-4d85-bffd-044a6c237345
