@@ -1,16 +1,16 @@
 flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/rubin_run_collection_transfer.py
 
 # Source site parameters (USDF)
-source_compute_endpoint_id: "USDF:lsst_desc_endpoint"
-source_collection_id: "USDF:slac#s3df_globus5"
+source_compute_endpoint: "USDF:lsst_desc_endpoint"
+source_collection: "USDF:slac#s3df_globus5"
 source_compute_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/repo_collection_transfer/
 source_repo: main
 source_data_path: /sdf/data/rubin/repo/main/
 run_collection: u/jchiang/torino_stage1_test_w_2026_04/20260125T231835Z
 
 # Destination site parameters (NERSC)
-destination_compute_endpoint_id: "NERSC:lsst_desc_endpoint"
-destination_collection_id: "NERSC:NERSC Perlmutter"
+destination_compute_endpoint: "NERSC:lsst_desc_endpoint"
+destination_collection: "NERSC:NERSC Perlmutter"
 destination_compute_path: /pscratch/sd/j/jchiang8/globus_flow_test/
 destination_repo: /pscratch/sd/j/jchiang8/globus_flow_test/repo/
 

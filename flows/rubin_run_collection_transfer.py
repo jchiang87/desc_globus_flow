@@ -134,7 +134,7 @@ def get_flow_input(config_file):
     flow_input = {
         "input": {
             "source_compute": {
-                "endpoint_id": endpoint_id(config["source_compute_endpoint_id"]),
+                "endpoint_id": endpoint_id(config["source_compute_endpoint"]),
                 "function_id": function_id(flow, "make_export_yaml"),
                 "arguments": {
                     "compute_path": config["source_compute_path"],
@@ -146,11 +146,11 @@ def get_flow_input(config_file):
                                             export_yaml)
             },
             "source_collection": {
-                "id": collection_id(config["source_collection_id"]),
+                "id": collection_id(config["source_collection"]),
                 "path": source_collection_path
             },
             "destination_compute": {
-                "endpoint_id": endpoint_id(config["destination_compute_endpoint_id"]),
+                "endpoint_id": endpoint_id(config["destination_compute_endpoint"]),
                 "function_id": function_id(flow, "repository_import"),
                 "arguments": {
                     "compute_path": config["destination_compute_path"],
@@ -162,7 +162,7 @@ def get_flow_input(config_file):
                                             export_yaml)
             },
             "destination_collection": {
-                "id": collection_id(config["destination_collection_id"]),
+                "id": collection_id(config["destination_collection"]),
                 "path": destination_collection_path
             }
         }

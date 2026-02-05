@@ -69,11 +69,11 @@ def get_flow_input(config_file):
         "input": {
             "folder_list": folder_list,
             "source_collection": {
-                "id": collection_id(config["source_collection_id"]),
+                "id": collection_id(config["source_collection"]),
                 "path": config["source_base_path"],
             },
             "destination_collection": {
-                "id": collection_id(config["destination_collection_id"]),
+                "id": collection_id(config["destination_collection"]),
                 "path": config["destination_base_path"],
             },
         }

@@ -1,12 +1,12 @@
 flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/rubin_remote_compute.py
 
 # USDF is the compute site.
-compute_endpoint_id: "USDF:lsst_desc_endpoint"
-compute_collection_id: "USDF:slac#s3df_globus5"
+compute_endpoint: "USDF:lsst_desc_endpoint"
+compute_collection: "USDF:slac#s3df_globus5"
 compute_base_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/
 
 # NERSC is the repository site where results will be written.
-repository_collection_id: "NERSC:NERSC Perlmutter"
+repository_collection: "NERSC:NERSC Perlmutter"
 repository_base_path: /pscratch/sd/j/jchiang8/globus_flow_test/
 
 payload_data:

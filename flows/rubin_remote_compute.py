@@ -110,15 +110,15 @@ def get_flow_input(config_file):
     flow_input = {
         "input": {
             "repository_collection": {
-                "id": collection_id(config["repository_collection_id"]),
+                "id": collection_id(config["repository_collection"]),
                 "path": config["repository_base_path"],
             },
             "compute_collection": {
-                "id": collection_id(config["compute_collection_id"]),
+                "id": collection_id(config["compute_collection"]),
                 "path": config["compute_base_path"],
             },
             "compute": {
-                "endpoint_id": endpoint_id(config["compute_endpoint_id"]),
+                "endpoint_id": endpoint_id(config["compute_endpoint"]),
                 "function_id": function_id(flow, "flow_function"),
                 "arguments": arguments,
             }
