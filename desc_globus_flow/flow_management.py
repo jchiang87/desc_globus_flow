@@ -99,14 +99,11 @@ def register_flow_functions(module):
     import __main__
 
     flow = module.__name__
-    flow_function = module.flow_function
+    flow_functions = module.flow_functions
 
     gcc = globus_compute_sdk.Client()
 
-    if not isinstance(flow_function, dict):
-        flow_function = {"flow_function": flow_function}
-
-    for label, func in flow_function.items():
+    for label, func in flow_functions.items():
         # Re-bind each function to the __main__ namespace so that they
         # can be serialized without requiring the flow module to be
         # accessible at the compute site.

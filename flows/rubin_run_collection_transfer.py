@@ -3,7 +3,7 @@ from desc_globus_flow import read_config, collection_id, endpoint_id, \
     function_id, flow_id
 
 
-__all__ = ["flow_definition", "flow_function", "get_flow_input"]
+__all__ = ["flow_definition", "flow_functions", "get_flow_input"]
 
 
 flow_definition = {
@@ -113,7 +113,7 @@ def repository_import(compute_path=None, repo=None, data_path=None,
     subprocess.check_call(shifter_command, shell=True)
 
 
-flow_function = {
+flow_functions = {
     "make_export_yaml": make_export_yaml,
     "repository_import": repository_import
 }

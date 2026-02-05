@@ -1,7 +1,7 @@
 from desc_globus_flow import read_config, collection_id, flow_id
 
 
-__all__ = ["flow_definition", "get_flow_input"]
+__all__ = ["flow_definition", "flow_functions", "get_flow_input"]
 
 
 flow_definition = {
@@ -52,6 +52,9 @@ flow_definition = {
         }
     }
 }
+
+
+flow_functions = {}
 
 
 def get_flow_input(config_file):
