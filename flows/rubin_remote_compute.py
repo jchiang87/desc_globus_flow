@@ -3,7 +3,7 @@ from desc_globus_flow import read_config, collection_id, endpoint_id, \
     function_id, flow_id
 
 
-__all__ = ["flow_definition", "flow_function", "get_flow_input"]
+__all__ = ["flow_definition", "flow_functions", "get_flow_input"]
 
 
 flow_definition = {
@@ -65,7 +65,7 @@ flow_definition = {
 }
 
 
-def flow_function(weekly=None, compute_path=None, repository_path=None):
+def bps_submit(weekly=None, compute_path=None, repository_path=None):
     import subprocess
 
     commands = f"""
@@ -89,6 +89,9 @@ def flow_function(weekly=None, compute_path=None, repository_path=None):
     subprocess.run(one_line_command, **kwargs)
 
     return (compute_path, repository_path)
+
+
+flow_functions = {"bps_submit": bps_submit}
 
 
 def get_flow_input(config_file):
@@ -119,7 +122,7 @@ def get_flow_input(config_file):
             },
             "compute": {
                 "endpoint_id": endpoint_id(config["compute_endpoint"]),
-                "function_id": function_id(flow, "flow_function"),
+                "function_id": function_id(flow, "bps_submit"),
                 "arguments": arguments,
             }
         }
