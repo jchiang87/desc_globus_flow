@@ -7,6 +7,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("flow_def_file", type=str, help="flow definition file")
 args = parser.parse_args()
 
-flow_function = get_flow_module(args.flow_def_file).flow_function
+module = get_flow_module(args.flow_def_file)
 
-register_flow_functions(flow_function)
+if not hasattr(module, "flow_function"):
+    print(f"No flow function found in {module.__name__}")
+else:
+    register_flow_functions(module)
