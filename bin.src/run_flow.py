@@ -22,7 +22,7 @@ flow_def_file = (args.flow_def_file if args.flow_def_file is not None
 get_flow_input = get_flow_module(flow_def_file).get_flow_input
 flow_input, flow_id = get_flow_input(args.flow_config)
 
-if args.verbose:
+if args.verbose or args.dry_run:
     print("flow_id:", flow_id)
     pprint(flow_input)
 
