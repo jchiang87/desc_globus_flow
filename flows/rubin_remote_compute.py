@@ -1,5 +1,6 @@
 import os
-from desc_globus_flow import read_config
+from desc_globus_flow import read_config, collection_id, endpoint_id, \
+    function_id
 
 
 __all__ = ["flow_definition", "flow_function", "get_flow_input"]
@@ -92,6 +93,7 @@ def flow_function(weekly=None, compute_path=None, repository_path=None):
 
 def get_flow_input(config_file):
     config = read_config(config_file)
+    flow = config["flow_definition_file"].split("/")[-1][:-len(".py")]
 
     compute_path = os.path.join(config["compute_base_path"],
                                 config["payload_data"]["inputs_folder"])
@@ -108,16 +110,16 @@ def get_flow_input(config_file):
     flow_input = {
         "input": {
             "repository_collection": {
-                "id": config["repository_collection_id"],
+                "id": collection_id(config["repository_collection_id"]),
                 "path": config["repository_base_path"],
             },
             "compute_collection": {
-                "id": config["compute_collection_id"],
+                "id": collection_id(config["compute_collection_id"]),
                 "path": config["compute_base_path"],
             },
             "compute": {
-                "endpoint_id": config["compute_endpoint_id"],
-                "function_id": config["flow_function_id"],
+                "endpoint_id": endpoint_id(config["compute_endpoint_id"]),
+                "function_id": function_id(flow, "flow_function"),
                 "arguments": arguments,
             }
         }

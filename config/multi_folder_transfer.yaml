@@ -4,11 +4,11 @@ flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/multi_folder_tran
 flow_id: 0d12eea4-f269-41ec-a5dd-5c78ba236255
 
 # USDF Collection info
-source_collection_id: 31f8393f-79ef-4da4-a395-7127edd9b3a4
+source_collection_id: "USDF:slac#s3df_globus5"
 source_base_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/
 
 # NERSC Collection info
-destination_collection_id: 6bdc7956-fc0f-4ad2-989c-7aa5ee643a79
+destination_collection_id: "NERSC:NERSC Perlmutter"
 destination_base_path: /pscratch/sd/j/jchiang8/globus_flow_test/
 
 folder_list:

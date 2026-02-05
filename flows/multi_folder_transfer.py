@@ -1,4 +1,4 @@
-from desc_globus_flow import read_config
+from desc_globus_flow import read_config, collection_id
 
 
 __all__ = ["flow_definition", "get_flow_input"]
@@ -69,11 +69,11 @@ def get_flow_input(config_file):
         "input": {
             "folder_list": folder_list,
             "source_collection": {
-                "id": config["source_collection_id"],
+                "id": collection_id(config["source_collection_id"]),
                 "path": config["source_base_path"],
             },
             "destination_collection": {
-                "id": config["destination_collection_id"],
+                "id": collection_id(config["destination_collection_id"]),
                 "path": config["destination_base_path"],
             },
         }
