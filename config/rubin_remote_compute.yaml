@@ -1,9 +1,5 @@
 flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/rubin_remote_compute.py
 
-# USDF to NERSC workflow
-flow_id: 5ec101ea-18b4-4251-84e6-645148ebe098
-flow_function_id: 79891205-2ea0-4e1c-a5b0-ecedde7697c0
-
 # USDF is the compute site.
 compute_endpoint_id: "USDF:lsst_desc_endpoint"
 compute_collection_id: "USDF:slac#s3df_globus5"

@@ -1,6 +1,6 @@
 import os
 from desc_globus_flow import read_config, collection_id, endpoint_id, \
-    function_id
+    function_id, flow_id
 
 
 __all__ = ["flow_definition", "flow_function", "get_flow_input"]
@@ -121,7 +121,7 @@ flow_function = {
 
 def get_flow_input(config_file):
     config = read_config(config_file)
-    flow = config["flow_definition_file"].split("/")[-1][:-len(".py")]
+    flow = config["flow"]
 
     run_collection = config["run_collection"]
     export_yaml = f"export_{run_collection.replace('/', '_')}.yaml"
@@ -168,4 +168,4 @@ def get_flow_input(config_file):
         }
     }
 
-    return flow_input, config["flow_id"]
+    return flow_input, flow_id(flow)

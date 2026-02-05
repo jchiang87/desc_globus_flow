@@ -1,4 +1,4 @@
-from desc_globus_flow import read_config, collection_id
+from desc_globus_flow import read_config, collection_id, flow_id
 
 
 __all__ = ["flow_definition", "get_flow_input"]
@@ -79,4 +79,4 @@ def get_flow_input(config_file):
         }
     }
 
-    return flow_input, config["flow_id"]
+    return flow_input, flow_id(config["flow"])

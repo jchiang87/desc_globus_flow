@@ -1,8 +1,5 @@
 flow_definition_file: /home/jchiang/dev/desc_globus_flow/flows/multi_folder_transfer.py
 
-# USDF to NERSC transfers
-flow_id: 0d12eea4-f269-41ec-a5dd-5c78ba236255
-
 # USDF Collection info
 source_collection_id: "USDF:slac#s3df_globus5"
 source_base_path: /sdf/home/j/jchiang/rubin-user/DESC/globus_flow_test/

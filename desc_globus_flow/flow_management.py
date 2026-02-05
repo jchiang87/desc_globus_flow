@@ -31,7 +31,8 @@ def function_id(flow, function):
 
 def flow_id(flow):
     row = {"flow": flow}
-    return UUID_DB.get("flows", row)
+    return os.environ.get("GLOBUS_FLOW_ID",
+                          UUID_DB.get("flows", row))
 
 
 def get_flow_module(definition_file):
@@ -58,12 +59,10 @@ def update_flow(module, title=None, app_name="lsst-desc-flow-app"):
         )
     )
 
-    my_flow_id = flow_id(flow)
-    my_flow_id = os.environ.get("GLOBUS_FLOW_ID", my_flow_id)
     if title is None:
         title = flow_definition["Comment"]
     flows_client.update_flow(
-        my_flow_id,
+        flow_id(flow),
         definition=flow_definition,
         title=title
     )
